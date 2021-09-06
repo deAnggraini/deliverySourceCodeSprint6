@@ -1,12 +1,12 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: bca-pakar-angular-dev
+  name: dev-bca-pakar-angular
   labels:
-    app: bca-pakar-angular-dev
+    app: dev-bca-pakar-angular
 spec:
   selector:
-    app: bca-pakar-angular-dev
+    app: dev-bca-pakar-angular
   ports:
     - port: 8080
       name: http
@@ -16,23 +16,23 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: bca-pakar-angular-dev
+  name: dev-bca-pakar-angular
   labels:
-    app: bca-pakar-angular-dev
+    app: dev-bca-pakar-angular
 spec:
   selector:                
     matchLabels:     
-      app: bca-pakar-angular-dev
+      app: dev-bca-pakar-angular
   replicas: 1
   template:
     metadata:
       labels:
-        app: bca-pakar-angular-dev
+        app: dev-bca-pakar-angular
         version: v1
     spec:
       containers:
-      - name: bca-pakar-angular-dev
-        image: image-registry.openshift-image-registry.svc:5000/d3wiaccred-dev/bca-pakar-angular-dev:latest
+      - name: dev-bca-pakar-angular
+        image: image-registry.openshift-image-registry.svc:5000/bca-pakar/dev-bca-pakar-angular:latest
         ports:
         - containerPort: 8080
       restartPolicy: Always
