@@ -1,0 +1,276 @@
+$bca-color: #0078D4;
+$bca-color-dark: #0F5EA9;
+
+.pakar-color-dark {
+  color: $bca-color-dark !important;
+}
+
+.pakar-color {
+  color: $bca-color !important;
+}
+
+.font-size-10,
+.fs10 {
+  font-size: 10px !important;
+}
+
+.font-size-12,
+.fs12 {
+  font-size: 12px !important;
+}
+
+.font-size-13,
+.fs13 {
+  font-size: 13px !important;
+}
+
+.font-size-14,
+.fs14 {
+  font-size: 14px !important;
+}
+
+.fs11pt {
+  font-size: 11pt !important;
+}
+
+.fs16pt {
+  font-size: 16pt !important;
+}
+
+// convert pt to em
+.fs16pt-em {
+  font-size: 1.4em !important;
+}
+
+.font-size-16,
+.fs16 {
+  font-size: 16px !important;
+}
+
+.font-size-18,
+.fs18 {
+  font-size: 18px !important;
+}
+
+.font-size-20,
+.fs20 {
+  font-size: 20px !important;
+}
+
+.font-size-24 {
+  font-size: 24px !important;
+}
+
+.font-size-26 {
+  font-size: 26px !important;
+}
+
+.font-size-28,
+.fs28 {
+  font-size: 28px !important;
+}
+
+.font-bold-400,
+.fb4 {
+  font-weight: 400;
+}
+
+.font-bold-600,
+.fb6 {
+  font-weight: 600;
+}
+
+.font-bold-700,
+.fb7 {
+  font-weight: 700;
+}
+
+.pakar-container {
+  background-color: white;
+  overflow-x: hidden;
+  min-height: calc(100vh - 50px);
+}
+
+.pakar-text-header-18 {
+  color: #201F1E;
+  @extend .font-bold-600;
+  @extend .font-size-18;
+}
+
+.pakar-text-header,
+.pakar-text-header-28,
+.th28 {
+  color: #201F1E;
+  @extend .fb6;
+  @extend .fs28;
+}
+
+.pakar-text-header-desc {
+  color: #605E5C;
+  font-weight: 400;
+  @extend .font-size-16;
+}
+
+.btn {
+  &.btn-blue {
+    color: white;
+    @extend .font-bold-600;
+    background-color: $bca-color;
+    border-radius: 20px;
+
+    &.btn-clean,
+    &.btn-clean:hover {
+      background-color: transparent;
+    }
+
+    i,
+    span {
+      color: $bca-color;
+    }
+
+    &:disabled {
+      background-color: #A19F9D;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) // , &:focus:not(:disabled) 
+
+      {
+      background-color: $bca-color-dark;
+
+      i,
+      span {
+        color: darkblue !important;
+      }
+    }
+  }
+
+  &.btn-blue-outline {
+    @extend .btn-blue;
+    background-color: white;
+    border-color: $bca-color;
+    color: $bca-color;
+
+    &:hover:not(:disabled) {
+      background-color: #f4f4f4;
+      border-color: $bca-color-dark;
+      color: $bca-color-dark;
+    }
+  }
+}
+
+.input-search {
+  padding-left: 25%;
+  padding-right: 25%;
+
+  .input-group {
+    background-color: white;
+    border: 1px solid #C8C6C4;
+    border-radius: 20px;
+    padding-left: 15px;
+    overflow: hidden;
+
+    .form-control-clear.btn-clean {
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    input {
+      border: none;
+    }
+
+    .btn {
+      border-color: transparent;
+      background: white;
+      border-radius: 0;
+
+      .fa {
+        color: #0F5EA9;
+      }
+    }
+
+    .input-separator {
+      margin-top: 0.7rem;
+      margin-bottom: 0.7rem;
+      width: 1px;
+      background-color: #C8C6C4;
+    }
+
+    .btn:hover {
+      background-color: #C8C6C4;
+      border-color: #C8C6C4;
+
+      .fa {
+        color: #C8C6C4;
+      }
+    }
+
+    .btn-clean:hover {
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+}
+
+.back-panel {
+
+  a,
+  .fa,
+  .far,
+  .fas {
+    color: white;
+  }
+
+  a:hover {
+    color: $bca-color;
+
+    .fa,
+    .far,
+    .fas {
+      color: $bca-color;
+    }
+  }
+}
+
+.background-overlay {
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .6);
+    height: 184px;
+  }
+}
+
+.fount-text {
+  @extend .fb6;
+  @extend .fs14;
+}
+
+.hide {
+  display: none;
+}
+
+// Custom Components
+pakar-input-drop-down.ng-touched.ng-invalid {
+  .combo-box {
+    border-color: red !important;
+  }
+}
+
+pakar-combo-box-accordion.ng-touched.ng-invalid {
+  .combo-box {
+    border-color: red !important;
+  }
+}
+
+pakar-input-length.ng-touched.ng-invalid {
+  .input-with-length {
+    border-color: red !important;
+  }
+}

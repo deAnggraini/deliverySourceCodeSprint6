@@ -1,0 +1,133 @@
+<div class="detail-header d-flex flex-row justify-content-between" *ngIf="section.id; else emptyData">
+    <span class="pakar-text-header-18">{{section.title}} </span>
+    <div class="node-buttons">
+        <div class="btn btn-sm btn-clean btn-blue btn-my" (click)="open(true, true)"><i class="fas fa-plus-circle"></i></div>
+        <div class="btn btn-sm btn-clean btn-blue btn-my" (click)="editSection()"><i class="fas fa-pen"></i></div>
+        <div class="btn btn-sm btn-clean btn-blue btn-my" (click)="deleteSection()"><i class="far fa-trash-alt"></i>
+        </div>
+    </div>
+</div>
+<div id="struktur-tree" class="tree-demo detail-header"></div>
+<div *ngIf="section.id && moved" style="
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1.5rem;">
+    <button type="button" class="btn btn-outline-light btn-sm rounded-lg px-5 mr-5" [disabled]="!moved"
+        (click)="cancel()">Batal</button>
+    <button type="button" class="btn btn-sm btn-blue rounded-lg px-5" [disabled]="dataForm.valid"
+        (click)="updateSection()">Simpan</button>
+</div>
+
+
+<ng-template #formAddChild let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{isEdit ? 'Ubah' : 'Tambah'}}
+            {{txtLevelName}}</h4>
+        <button type="button" class="close font-weight-lighter" aria-label="Close" (click)="d('Cross click')">
+            <i aria-hidden="true" class="icon-2x">&times;</i>
+        </button>
+    </div>
+    <div class="modal-body pt-0">
+        <form class="form" [formGroup]="dataForm" novalidate="novalidate" (ngSubmit)="save()">
+            <div class="form-group">
+                <label>Nama {{txtLevelName}} <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" maxlength="50" placeholder="Masukkan nama menu" required
+                    formControlName="name" autocomplete="off" [ngClass]="{ 'is-invalid': hasError}">
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['name']}"></ng-container>
+            </div>
+            <div class="form-group">
+                <label>Gambar {{txtLevelName}} <span class="text-danger">*</span></label>
+                <!-- formControlName="image" -->
+                <!-- <input class="form-control" type="file" placeholder="Pilih Gambar" required autocomplete="off"
+                    [ngClass]="{ 'is-invalid': hasError}" (change)="onImageChange($event, 'image')" accept="image/*"> -->
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile04"
+                        [ngClass]="{ 'is-invalid': hasError }" (change)="onImageChange($event, 'image')"
+                        accept="image/*">
+                    <label class="custom-file-label" for="inputGroupFile04">{{ showIconName('image') }}</label>
+                </div>
+                <small>Gambar diperlukan untuk kebutuhan homepage.</small>
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['image']}"></ng-container>
+                <div class="preview" *ngIf="imageFile">
+                    <img [src]="imageFile" style="width:100px; height:100px">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Deskripsi {{txtLevelName}} <span class="text-danger">*</span></label>
+                <textarea class="form-control" maxlength="200" placeholder="Masukkan definisi dari Kategori terkait"
+                    required formControlName="desc" autocomplete="off"
+                    [ngClass]="{ 'is-invalid': hasError }"></textarea>
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['desc']}"></ng-container>
+            </div>
+            <div class="form-group">
+                <label>Lokasi <span class="text-danger">*</span></label>
+                <select class="form-control" required formControlName="location">
+                    <option value="">-- Pilih Salah Satu --</option>
+                    <option *ngFor="let lokasi of locationParents" [value]="lokasi._value">
+                        {{lokasi._text}}
+                    </option>
+                </select>
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['location']}"></ng-container>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light btn-sm rounded-lg px-5" (click)="c('Batal')">Batal</button>
+        <button type="button" class="btn btn-sm btn-blue rounded-lg px-5" (click)="save()"
+            [disabled]="dataForm.invalid || isProcess">{{isEdit ? 'Ubah' : 'Tambah'}}</button>
+    </div>
+</ng-template>
+
+<ng-template #formChangeParent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Pindah {{txtLevelName}}</h4>
+        <button type="button" class="close ont-weight-lighter" aria-label="Close" (click)="d('Cross click')">
+            <i aria-hidden="true" class="icon-2x">&times;</i>
+        </button>
+    </div>
+    <div class="modal-body pt-0">
+        <form class="form" [formGroup]="dataForm" novalidate="novalidate" (ngSubmit)="save()">
+            <div>Sebelum Kamu dapat menghapus {{txtLevelName}} <b>"{{selectedDelete.title}}"</b>, Kamu harus memindahkan
+                terlebih dahulu
+                {{txtLevelChildName}} yang terdapat pada {{txtLevelName}} tersebut.</div>
+            <div class="form-group row" *ngFor="let change of listToChangeParent">
+                <label class="col-4 col-form-label">{{change.title}}</label>
+                <select class="form-control col-7" required [ngClass]="{ 'is-invalid': change.error}" #mySelect
+                    (change)="changeComboboxParent(mySelect.value, change.id)">
+                    <option value="0">-- Pilih Salah Satu --</option>
+                    <option *ngFor="let bro of listBrothers" [value]="bro.id">{{bro.title}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light btn-sm rounded-lg px-5" (click)="c('Batal')">Batal</button>
+        <button type="button" class="btn btn-sm btn-blue rounded-lg px-5" (click)="saveChangeParent()">Simpan</button>
+    </div>
+</ng-template>
+
+<ng-template #emptyData>
+    <div class="">
+        <div>Silahkan Pilih Kategori Menu</div>
+    </div>
+</ng-template>
+
+<ng-template #formError let-control="control">
+    <ng-container *ngIf="control.errors && control.dirty">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <ng-container *ngIf="control.errors.required"><span>Field harus disi</span></ng-container>
+                <ng-container *ngIf="control.errors.minlength"><span>Panjang minimal
+                        {{control.errors.minlength.requiredLength}}</span></ng-container>
+                <ng-container *ngIf="control.errors.maxlength"><span>Panjang maximal
+                        {{control.errors.maxlength.requiredLength}}</span></ng-container>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

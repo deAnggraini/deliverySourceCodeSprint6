@@ -1,0 +1,18 @@
+:host ::ng-deep {
+  .combo-box-dropdown {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #69b3ff;
+    border-radius: 0;
+  }
+
+  .combo-box {
+    border: 1px solid #E4E6EF;
+    padding: 0.65rem 2px 0.65rem 1rem;
+
+    &.focus {
+      border-color: #69b3ff;
+    }
+  }
+}

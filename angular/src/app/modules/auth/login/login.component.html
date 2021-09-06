@@ -1,0 +1,125 @@
+<div class="login-form login-signin">
+
+  <form class="form" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form" (ngSubmit)="submit()"
+    autocomplete="off">
+
+    <div class="pb-3 pt-lg-0 pt-5">
+      <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
+        Selamat Datang di PAKAR
+      </h3>
+      <span>Informasi ketentuan dan prosedur #caridiPAKAR</span>
+    </div>
+    <hr>
+    <!-- <div>{{hasAttempt}}</div> -->
+    <div class="form-group" *ngIf="hasAttempt >= 3">
+      <div class="bg-warning attempt-msg" [ngClass]="{'log-attempt-msg': hasAttempt >= 5}">
+        <ng-container *ngIf="hasAttempt < 5">
+          <span [inlineSVG]="'./assets/media/svg/bca/icon/warning.svg'" cacheSVG="true" class="svg-icon"></span>
+          <!-- <span>You have {{5 - (hasAttempt % 5)}} remaining attempts to login</span> -->
+          <span [innerHTML]="hasAttemptMessage"></span>
+        </ng-container>
+        <ng-container *ngIf="hasAttempt >= 5">
+          <span [inlineSVG]="'./assets/media/svg/bca/icon/lock.svg'" cacheSVG="true" class="svg-icon"></span>
+          <!-- <span>User ‘<b>{{loginForm.value.username}}</b>’ currently locked. Please try again in <b>29
+              minutes.</b></span> -->
+          <span [innerHTML]="hasAttemptMessage"></span>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="font-size-h6 font-weight-bolder text-dark">User ID</label>
+      <div class="form-control-iconless">
+        <input class="form-control h-42px py-7 px-6 rounded-lg" type="text" name="u_name" formControlName="username"
+          autocomplete="off" [ngClass]="{ 'is-invalid': hasError }" placeholder="Masukkan domain Kamu" />
+      </div>
+      <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'Username is required',
+          control: loginForm.controls['username']
+        }"></ng-container> -->
+      <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'username',
+          message: 'Username is invalid',
+          control: loginForm.controls['username']
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'pattern',
+          message: 'Username harus 8 karakter alphanumeric',
+          control: loginForm.controls['username']
+        }"></ng-container> -->
+    </div>
+    <!--end::Form group-->
+
+    <!--begin::Form group-->
+    <div class="form-group pt-4">
+      <div class="d-flex justify-content-between mt-n5">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+        <!-- <a routerLink="/auth/forgot-password"
+          class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">
+          Forgot Password ?
+        </a> -->
+      </div>
+
+      <div class="input-icon input-icon-right form-control-iconless">
+        <input class="form-control h-42px py-7 px-6 rounded-lg" type={{typePass}} name="u_pass"
+          autocomplete="new-password" formControlName="password" placeholder="Masukkan password domain Kamu"
+          [ngClass]="{ 'is-invalid': hasError}" />
+        <span (click)="showPassword()">
+          <i class="far fa-eye icon-md" *ngIf="!revealPass"></i>
+          <i class="far fa-eye-slash icon-md" *ngIf="revealPass"></i>
+        </span>
+      </div>
+      <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'Password is required',
+          control: loginForm.controls['password']
+        }"></ng-container> -->
+      <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+          validation: 'pattern',
+          message: 'Password minimal 6 karakter alphanumeric',
+          control: loginForm.controls['password']
+        }"></ng-container> -->
+      <ng-container *ngIf="hasError">
+        <div class="fv-plugins-message-container mt-3">
+          <div class="fv-help-block">{{hasErrorMessage}}.</div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- <div class="form-group">
+      <div class="d-flex justify-content-between mt-n5">
+        <label><input type="checkbox" formControlName="remember"> Remember me</label>
+      </div>
+    </div> -->
+
+    <div class="pb-lg-0 pb-5">
+      <button type="submit" id="kt_login_signin_submit"
+        class="btn btn-block btn-pill font-weight-bolder font-size-h6 h-48px px-8 py-4 my-3 mr-3"
+        [ngClass]="{disabled: loginForm.invalid}" [disabled]="loginForm.invalid">
+        Sign In
+      </button>
+
+      <!-- <button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
+        <span class="svg-icon svg-icon-md">
+          <img src="./assets/media/svg/logos/gitlab.svg" style="width: 20px; height: 20px;" />
+        </span>
+        Login Portal
+      </button> -->
+
+      <ng-container *ngIf="isLoading$ | async">
+        <span class="spinner spinner-primary ml-5"></span>
+      </ng-container>
+    </div>
+  </form>
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

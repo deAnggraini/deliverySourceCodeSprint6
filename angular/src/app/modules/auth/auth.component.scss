@@ -1,0 +1,139 @@
+@import "../../../assets/sass/pages/login/login-1.scss";
+
+:host {
+  height: 100%;
+
+  .login {
+    background-image: linear-gradient(#ffffff, #d8efff);
+
+    .login-content {
+      margin-top: 100px;
+      width: 400px;
+    }
+
+    .login-aside {
+      max-width: 55%;
+      justify-content: center;
+
+      img {
+        margin-left: 20%;
+        position: static;
+        height: 50px;
+      }
+
+      @media (min-width: 1920px) {
+        img {
+          margin-left: 27%;
+          position: static;
+          height: 50px;
+        }
+      }
+
+      @media (min-width: 2160px) {
+        img {
+          margin-left: 34%;
+          position: static;
+          height: 50px;
+        }
+      }
+
+      @media (min-width: 4320px) {
+        img {
+          margin-left: 41%;
+          position: static;
+          height: 50px;
+        }
+      }
+
+      .aside-img {
+        // background-size: 600px 409.79px;
+        background-size: contain;
+      }
+    }
+  }
+
+  @media (max-width: 991.5px) {
+    .login {
+      .login-content {
+        margin-top: 50px;
+        width: 600px;
+      }
+
+      .login-aside {
+        max-width: 100%;
+        margin-top: 70px;
+
+        img {
+          // margin-left:;
+          align-items: center;
+          height: 60px;
+        }
+      }
+    }
+  }
+
+  //tablet : 770px
+  @media (max-width: 812px) {
+    .login {
+      .login-content {
+        margin-top: 0;
+        margin-bottom: 10px;
+        width: 600px;
+      }
+
+      .login-aside {
+        max-width: 100%;
+
+        a {
+          justify-content: center;
+
+          img {
+            margin-left: 0;
+            margin-top: 30px;
+            height: 60px;
+          }
+        }
+
+        .image {
+          padding-bottom: 0;
+
+          .aside-img {
+            background-size: 500px, auto;
+          }
+        }
+      }
+    }
+  }
+
+  // mobile phone
+  @media (max-width: 480px) {
+    .login {
+      .login-content {
+        margin-top: 0;
+        margin-bottom: 30px;
+        width: auto;
+      }
+
+      .login-aside {
+        max-width: 100%;
+
+        .image {
+          padding-bottom: 0;
+
+          a {
+            justify-content: center;
+            img {
+              margin-left: 0;
+              margin-top: 30px;
+              height: 50px;
+            }
+          }
+
+          .aside-img {
+            background-size: 300px, auto;
+          }
+        }
+      }
+    }
+  }
+}

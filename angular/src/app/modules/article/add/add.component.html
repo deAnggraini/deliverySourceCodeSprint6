@@ -1,0 +1,70 @@
+<div class="pakar-container mx-15 p-8">
+    <span class="pakar-text-header">Tambah Artikel</span>
+    <form class="form" [formGroup]="dataForm" novalidate="novalidate" (ngSubmit)="save()">
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="form-group col-sm-10 col-md-10 col-lg-8  col-xxl-8">
+                        <label>Judul Artikel <span class="text-danger">*</span></label>
+                        <pakar-input-length placeholder="Masukkan nama artikel disini (maks. 50 karakter)"
+                            formControlName="title" maxlength="50" (onChange)="checkUniq($event)" [hasError]="hasError">
+                        </pakar-input-length>
+                        <pakar-control-error [control]="dataForm.controls['title']" alias="Judul Artikel">
+                        </pakar-control-error>
+                        <ng-container *ngIf="hasError">
+                            <div class="fv-plugins-message-container">
+                                <div class="fv-help-block"><span>{{errorMsg}}</span></div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="form-group col-sm-10 col-md-10 col-lg-11 col-xxl-11">
+                        <label>Lokasi Artikel <span class="text-danger">*</span></label>
+                        <pakar-combo-box-accordion formControlName="structureId" (onChange)="changeLocation($event)"
+                            [options]="locationOptions"
+                            placeholder="Pilih lokasi yang tepat untuk artikel yang ingin ditambahkan">
+                        </pakar-combo-box-accordion>
+                    </div>
+                    <div class="form-group col-sm-10 col-md-10 col-lg-6" *ngIf="!disabledUsedBy">
+                        <label>Artikel digunakan oleh <span class="text-danger">*</span></label>
+                        <pakar-input-drop-down formControlName="usedBy" [options]="usedByOptions"
+                            placeholder="Pilih pengguna aplikasi/mesin">
+                        </pakar-input-drop-down>
+                    </div>
+
+                    <div class="form-group col-11" *ngIf="!disabledUsedBy">
+                        <label>Rekomendasi Template<span class="text-danger">*</span></label>
+                        <div>Pilih salah satu template dibawah ini untuk memudahkan Kamu dalam membuat artikel.
+                            Template yang disediakan masih dapat diubah sesuai dengan kebutuhan Kamu.</div>
+                        <div class="row mt-3">
+                            <div class="col template-item" *ngFor="let template of listTemplate">
+                                <label class="d-flex flex-row">
+                                    <input type="radio" [value]="template.id" formControlName="templateId">
+                                    <div class="d-flex flex-column pl-1">
+                                        <img class="template-thumbnail"
+                                            [src]="'/assets/media/images/' + (template.name == 'Empty' ? 'empty_thumb.svg' : 'basic_thumb.svg')">
+                                        <span>{{template.name}}</span>
+                                        <span class="font-weight-normal" [innerHTML]="template.desc"></span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mr-5" style="max-width: 400px; max-height: 620px;">
+                <ng-container *ngIf="!disabledUsedBy">
+                    <div class="font-weight-bolder">Template</div>
+                    <div class="right-preview" [ngStyle]="{'background-image': 'url(' + preview_img +')'}">
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <!-- <button>Check Data</button> -->
+            <button type="button" (click)="reset()"
+                class="btn btn-outline-light btn-sm rounded-lg px-5 ml-3">Batal</button>
+            <button type="button" (click)="save()" class="btn btn-sm btn-blue rounded-lg px-5 ml-3"
+                [disabled]="dataForm.invalid || hasError">Tambah Artikel</button>
+        </div>
+    </form>
+</div>

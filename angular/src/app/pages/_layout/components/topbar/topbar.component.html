@@ -1,0 +1,263 @@
+<!-- Tombol tambah halaman -->
+<ng-container *ngIf="showAddButton || showSettingButton">
+  <div class="dropdown" id="kt_quick_search_toggle" autoClose="outside" ngbDropdown #dropDown="ngbDropdown">
+    <div class="topbar-item" ngbDropdownToggle>
+      <div class="btn btn-icon btn-clean btn-dropdown btn-sm topbar-button px-2" id="kt_quick_cart_toggle"
+        style="width: unset;">
+        <!-- <span [inlineSVG]="'./assets/media/svg/icons/Files/File-plus.svg'" cacheSVG="true" class="svg-icon svg-icon-xl mr-1 ml-1"></span> -->
+        <span [inlineSVG]="'./assets/media/svg/bca/top-bar/note.svg'" cacheSVG="true"
+          class="svg-icon svg-icon-xl"></span>&nbsp;
+        Tambah Halaman&nbsp;&nbsp;
+        <span [inlineSVG]="'./assets/media/svg/icons/Navigation/Angle-down.svg'" cacheSVG="true"
+          class="svg-icon mr-1"></span>
+        <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up" ngbDropdownMenu>
+          <ul class="navi navi-hover">
+            <li class="navi-item">
+              <a routerLink="/article/add" class="navi-link cursor-pointer" (click)="dropDown.close()"><span
+                  class="navi-text font-weight-bolder">Artikel</span></a>
+            </li>
+            <li class="navi-item">
+              <a routerLink="/article/add" class="navi-link cursor-pointer" (click)="dropDown.close()"><span
+                  class="navi-text font-weight-bolder">Virtual
+                  Page</span></a>
+            </li>
+            <li class="navi-item">
+              <a routerLink="/article/add" class="navi-link cursor-pointer" (click)="dropDown.close()"><span
+                  class="navi-text font-weight-bolder">Formulir</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="extraSearchDisplay">
+  <ng-container *ngIf="extrasSearchLayout === 'offcanvas'">
+    <!--begin::Search-->
+    <div class="topbar-item">
+      <div class="btn btn-icon btn-clean btn-sm mr-1" id="kt_quick_search_toggle">
+        <span [inlineSVG]="'./assets/media/svg/icons/General/Search.svg'" cacheSVG="true"
+          class="svg-icon svg-icon-xl"></span>
+      </div>
+    </div>
+    <!--end::Search-->
+  </ng-container>
+
+  <ng-container *ngIf="extrasSearchLayout === 'dropdown'" id="kt_quick_search_toggle">
+    <div class="dropdown" id="kt_quick_search_toggle" autoClose="outside" ngbDropdown>
+      <!--begin::Toggle-->
+      <div class="topbar-item" ngbDropdownToggle>
+        <div class="btn btn-icon btn-clean btn-sm btn-dropdown mr-1">
+          <span [inlineSVG]="'./assets/media/svg/icons/General/Search.svg'" cacheSVG="true"
+            class="svg-icon svg-icon-xl"></span>
+        </div>
+      </div>
+      <!--end::Toggle-->
+
+      <!--begin::Dropdown-->
+      <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg" ngbDropdownMenu>
+        <app-search-dropdown-inner></app-search-dropdown-inner>
+      </div>
+      <!--end::Dropdown-->
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="extrasQuickPanelDisplay">
+  <!--begin::Quick panel-->
+  <div class="topbar-item">
+    <div class="btn btn-icon btn-clean btn-sm mr-1" id="kt_quick_panel_toggle">
+      <!-- <span [inlineSVG]="'./assets/media/svg/icons/Code/Info-circle.svg'" cacheSVG="true" class="svg-icon svg-icon-xl"></span> -->
+      <span [inlineSVG]="'./assets/media/svg/bca/top-bar/glossary.svg'" cacheSVG="true"
+        class="svg-icon svg-icon-xl"></span>
+    </div>
+  </div>
+  <!--end::Quick panel-->
+</ng-container>
+
+<ng-container *ngIf="extrasNotificationsDisplay">
+  <!-- <ng-container *ngIf="extrasNotificationsLayout === 'offcanvas'">
+    <div class="topbar-item">
+      <div class="btn btn-icon btn-icon-mobile btn-clean btn-sm mr-1" id="kt_quick_notifications_toggle">
+        <span [inlineSVG]="'./assets/media/svg/bca/top-bar/notifications2.svg'" cacheSVG="true"
+          class="svg-icon svg-icon-xl"></span>
+        <span class="label label-number">99</span>
+      </div>
+    </div>
+  </ng-container> -->
+  <ng-container *ngIf="extrasNotificationsLayout === 'dropdown'">
+    <div class="dropdown" ngbDropdown placement="bottom-right" autoClose="true" #notifDropDown="ngbDropdown">
+      <div class="topbar-item kt_quick_notifications_toggle" data-toggle="dropdown" data-offset="10px,0px"
+        ngbDropdownToggle>
+        <div class="btn btn-icon btn-icon-mobile btn-clean btn-sm">
+          <span [inlineSVG]="'./assets/media/svg/bca/top-bar/notifications2.svg'" cacheSVG="true"
+            class="svg-icon svg-icon-xl"></span>
+          <span class="label label-number" *ngIf="unReadNotif">{{unReadNotif}}</span>
+        </div>
+      </div>
+
+      <div ngbDropdownMenu class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-lg" style="border-radius: 2px; width: 483px;
+        box-shadow: 0px 1.2px 3.6px rgba(0, 0, 0, 0.1), 0px 6.4px 14.4px rgba(0, 0, 0, 0.13);">
+        <app-notifications-dropdown-inner class="d-flex flex-column flex-row-fluid" style="min-height: 484px; "
+          (click)="notifDropDown.close()">
+        </app-notifications-dropdown-inner>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<!-- Custom by HQ untuk bookmark -->
+<ng-container *ngIf="extrasQuickActionsDisplay">
+  <ng-container *ngIf="extrasQuickActionsLayout === 'offcanvas'">
+    <!--begin::Quick Actions-->
+    <div class="topbar-item">
+      <div class="btn btn-icon btn-clean btn-dropdown btn-sm mr-1" id="kt_quick_actions_toggle">
+        <!-- <span [inlineSVG]="'./assets/media/svg/icons/General/Bookmark.svg'" cacheSVG="true" class="svg-icon svg-icon-xl"> </span> -->
+        <span [inlineSVG]="'./assets/media/svg/bca/top-bar/bookmark.svg'" cacheSVG="true" class="svg-icon svg-icon-xl">
+        </span>
+      </div>
+    </div>
+    <!--end::Quick Actions-->
+  </ng-container>
+  <ng-container *ngIf="extrasQuickActionsLayout === 'dropdown'">
+    <!--begin::Quick Actions-->
+    <div class="dropdown" ngbDropdown placement="bottom">
+      <!--begin::Toggle-->
+      <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px" ngbDropdownToggle>
+        <div class="btn btn-icon btn-clean btn-dropdown btn-sm mr-1">
+          <!-- <span [inlineSVG]="'./assets/media/svg/icons/General/Bookmark.svg'" cacheSVG="true" class="svg-icon svg-icon-xl"></span> -->
+          <span [inlineSVG]="'./assets/media/svg/bca/top-bar/bookmark.svg'" cacheSVG="true"
+            class="svg-icon svg-icon-xl"> </span>
+        </div>
+      </div>
+      <!--end::Toggle-->
+      <!--begin::Dropdown-->
+      <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-lg" ngbDropdownMenu>
+        <app-quick-actions-dropdown-inner></app-quick-actions-dropdown-inner>
+      </div>
+      <!--end::Dropdown-->
+    </div>
+    <!--end::Quick Actions-->
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="extrasLanguagesDisplay">
+  <app-language-selector style="margin-top: 10px;"></app-language-selector>
+</ng-container>
+
+<div class="my-4 mx-3" style="width: 1px; border-right: 1px solid white;"></div>
+
+<ng-container *ngIf="extrasUserDisplay">
+  <ng-container *ngIf="extrasUserLayout === 'offcanvas'">
+    <ng-container *ngIf="user$ | async as _user">
+      <!--begin::User-->
+      <div class="topbar-item">
+        <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-sm px-2"
+          id="kt_quick_user_toggle">
+          <span class="symbol symbol-lg-25 symbol-25 mr-3">
+            <span class="symbol-label font-size-h7 font-weight-bold rounded-xl px-2 ">{{aliasName}}</span>
+          </span>
+          <span class="font-weight-bolder font-size-base d-none d-md-inline"
+            style="text-transform: uppercase;">{{ _user.fullname }}</span>
+        </div>
+      </div>
+      <!--end::User-->
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="extrasUserLayout === 'dropdown'">
+    <!--begin::User-->
+    <ng-container *ngIf="user$ | async as _user">
+      <div class="dropdown" ngbDropdown placement="bottom-right">
+        <div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px" ngbDropdownToggle>
+          <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-sm px-2">
+            <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+            <span
+              class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ _user.fullname }}</span>
+            <span class="symbol symbol-35 symbol-light-success">
+              <span class="symbol-label font-size-h5 font-weight-bold">{{
+                _user.fullname | firstLetter
+              }}</span>
+            </span>
+          </div>
+        </div>
+        <!--end::Toggle-->
+        <!--begin::Dropdown-->
+        <div ngbDropdownMenu
+          class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg p-0">
+          <app-user-dropdown-inner></app-user-dropdown-inner>
+        </div>
+      </div>
+      <!--end::Dropdown-->
+    </ng-container>
+    <!--end::User-->
+  </ng-container>
+</ng-container>
+
+
+<!-- Custom by HQ, cart gunakan untuk admin setting -->
+<ng-container *ngIf="extrasCartDisplay && showSettingButton">
+  <div class="my-4 mx-3" style="width: 1px; border-right: 1px solid white;"></div>
+  <ng-container *ngIf="extrasCartLayout === 'offcanvas'">
+    <div class="topbar-item">
+      <div class="btn btn-icon btn-clean btn-dropdown btn-sm mr-1" id="kt_quick_cart_toggle">
+        <span [inlineSVG]="'./assets/media/svg/bca/top-bar/setting.svg'" cacheSVG="true"
+          class="svg-icon svg-icon-xl"></span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="extrasCartLayout === 'dropdown'">
+    <div class="dropdown" ngbDropdown placement="bottom-right" #adminDropDown="ngbDropdown">
+      <!-- data-offset="10px,0px" -->
+      <div class="topbar-item" data-toggle="dropdown" ngbDropdownToggle>
+        <div class="btn btn-icon btn-clean btn-dropdown btn-sm mr-1">
+          <!-- <span [inlineSVG]="'./assets/media/svg/icons/Code/Settings4.svg'" cacheSVG="true" class="svg-icon svg-icon-xl"></span> -->
+          <span [inlineSVG]="'./assets/media/svg/bca/top-bar/setting.svg'" cacheSVG="true"
+            class="svg-icon svg-icon-xl"></span>
+        </div>
+      </div>
+      <!-- <div ngbDropdownMenu class="dropdown-menu p-0 dropdown-menu-xl dropdown-menu-anim-up">
+        <form>
+          <app-cart-dropdown-inner></app-cart-dropdown-inner>
+        </form>
+      </div> -->
+      <div class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up dropdown-menu-sm" ngbDropdownMenu>
+        <ul class="navi navi-hover">
+          <li class="navi-item">
+            <a class="navi-link cursor-pointer disabled"><span class="navi-text">Dashboard</span></a>
+          </li>
+          <li class="navi-item">
+            <a class="navi-link cursor-pointer disabled"><span class="navi-text">Role</span></a>
+          </li>
+          <li class="navi-item">
+            <a class="navi-link cursor-pointer disabled"><span class="navi-text">Penilaian</span></a>
+          </li>
+          <li class="navi-item dropdown" ngbDropdown placement="left-bottom">
+            <a class="navi-link cursor-pointer dropdown" ngbDropdownToggle style="width: 100%;">
+              <span class="navi-text">Pengaturan</span>
+              <span class="navi-arrow"></span>
+              <div class="dropdown-menu p-0 m-0 dropdown-menu-left dropdown-menu-anim-up dropdown-menu-sm"
+                ngbDropdownMenu>
+                <ul class="navi navi-hover">
+                  <li class="navi-item disabled">
+                    <a class="navi-link cursor-pointer disabled"><span class="navi-text">Homepage</span></a>
+                  </li>
+                  <li class="navi-item">
+                    <a routerLink="/struktur/add" (click)="adminDropDown.close()" class="navi-link cursor-pointer">
+                      <span class="navi-text">Struktur Menu</span>
+                    </a>
+                  </li>
+                  <li class="navi-item">
+                    <a class="navi-link cursor-pointer disabled"><span class="navi-text">Rekomendasi
+                        Template</span></a>
+                  </li>
+                </ul>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

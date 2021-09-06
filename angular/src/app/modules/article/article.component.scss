@@ -1,0 +1,9 @@
+// ::ng-deep {
+//   div.content {
+//     background-image: none;
+//   }
+// }
+
+:host ::ng-deep .background-search {
+   background-size: cover;
+}

@@ -1,0 +1,29 @@
+:host ::ng-deep {
+  p {
+    margin-bottom: 0;
+  }
+
+  ul {
+    padding-inline-start: 17px;
+  }
+
+}
+
+i {
+  color: #201F1E !important;
+
+  &:hover {
+    color: #0078D4 !important;
+  }
+}
+
+.btn-outline {
+  color: #201F1E;
+  background-color: white;
+  border-color: #A19F9D;
+
+  &:hover {
+    background-color: #A19F9D;
+  }
+}
+

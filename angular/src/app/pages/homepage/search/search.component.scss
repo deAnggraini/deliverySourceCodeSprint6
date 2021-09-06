@@ -1,0 +1,161 @@
+::ng-deep {
+  .fount-text {
+    // color: red;
+    font-weight: bold;
+  }
+}
+
+:host ::ng-deep .navi {
+  .navi-item .navi-link {
+    padding: 0 1rem;
+    height: 36px;
+  }
+}
+
+:host {
+  .container-search {
+    box-shadow: 0px 4px 8px 0px #0000001A;
+    color: #004578;
+    background-image: url('/assets/media/svg/bca/homepage/girl-lop.svg'), url('/assets/media/svg/bca/homepage/bg1.svg');
+    background-repeat: no-repeat, no-repeat;
+    background-position: right 23px center, right -12px bottom -12px;
+    height: 274px;
+    overflow: visible;
+
+    @media (max-width: 992px) {
+      background-image: url('/assets/media/svg/bca/homepage/bg1.svg');
+      background-repeat: no-repeat;
+      background-position: right -12px bottom -12px;
+    }
+
+    @media (min-width: 1400px) {
+      .text-welcome {
+        font-size: 24px;
+      }
+
+      .text-cari {
+        font-size: 32px;
+        font-weight: bold;
+      }
+    }
+
+    .input-group.show {
+      border-radius: 20px 20px 0 0;
+      // input {
+      //   border-radius: 20px 0px 0px 0px;
+      // }
+
+      // .btn {
+      //   border-radius: 0px 20px 0px 0px;
+      // }
+    }
+
+    .input-group {
+      border: 1px solid #0F5EA9;
+      border-radius: 20px;
+      padding-left: 15px;
+      overflow: hidden;
+
+      .form-control-clear.btn-clean {
+        background-color: transparent;
+        border-color: transparent;
+      }
+
+      input {
+        border: none;
+      }
+
+      .btn {
+        border-color: #0F5EA9;
+        background: #0F5EA9;
+        border-radius: 0;
+
+        .fa {
+          color: white;
+        }
+      }
+
+      .btn:hover {
+        background-color: #ddd;
+        border-color: #ddd;
+
+        .fa {
+          color: #0F5EA9;
+        }
+      }
+
+      .btn-clean:hover {
+        background-color: transparent;
+        border-color: transparent;
+      }
+    }
+
+    .my-data {
+      padding: 10px 15px;
+      background-color: white;
+      z-index: 100;
+      position: relative;
+      border: 1px solid #0F5EA9;
+      border-top-width: 0px;
+      border-radius: 0px 0px 20px 20px;
+      overflow-y: hidden;
+
+      .search-scroll {
+        overflow-y: auto;
+        max-height: 300px;
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+      }
+
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #ddd;
+      border-radius: 30px;
+    }
+
+  }
+}
+
+:host ::ng-deep {
+  .text-gray {
+    color: #A19F9D;
+
+    svg {
+      g {
+        [fill] {
+          fill: #A19F9D;
+          stroke: red;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    .text-welcome {
+      margin-bottom: 5px;
+    }
+
+    .text-cari {
+      margin-bottom: 5px;
+    }
+
+    .p-10 {
+      padding: 2rem !important;
+    }
+
+    .col-lg-9,
+    .col-xxl-9 {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+  }
+}

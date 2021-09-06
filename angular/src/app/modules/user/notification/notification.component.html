@@ -1,0 +1,82 @@
+<div class="background-overlay background-search d-flex flex-column flex-fill" style="
+    background-image: url('./assets/media/images/notification_bg.jpeg');
+    background-repeat: no-repeat;
+    background-position: top;
+    min-height: 184px;
+    background-size: 100% 184px;
+    height: 100%;
+">
+    <div class="d-flex flex-column flex-fill mx-15 mt-0">
+        <div class="py-7">
+            <pakar-search></pakar-search>
+        </div>
+        <div class="card card-custom d-flex flex-fill px-10 py-5 mb-2">
+            <div class="d-flex flex-row  align-items-center justify-content-between mb-3">
+                <div class="d-flex flex-row align-items-center">
+                    <span [inlineSVG]="'./assets/media/svg/bca/icon/notification.svg'" class="svg-icon mr-2"></span>
+                    <div class="pakar-text-header my-2">Notifikasi</div>
+                </div>
+                <div class="input-group inner" [ngStyle]="{'border' : keyword ?  '1px solid #0F5EA9' :  '1px solid #C8C6C4'}">
+                    <input type="text" class="form-control" placeholder="Cari artikel, virtual page atau formulir"
+                        [(ngModel)]="keyword" style="height: 34px; padding-top: 6px;" (keyup.enter)="doSearch(keyword)">
+                    <div class="form-control-clear btn btn-icon btn-clean" *ngIf="keyword"
+                        (click)="keyword =''; onSearch(keyword, 1)" style="height: 34px;">
+                        <span [inlineSVG]="'./assets/media/svg/bca/icon/close.svg'" cacheSVG="true"
+                            class="hidden svg mr-1 ml-1"></span>
+                    </div>
+                    <span class="input-group-btn" style="height: 34px;">
+                        <button class="btn btn-outline-secondary btn-success btn-sm" type="button"
+                            (click)="doSearch($event)" style="padding-top: 6px;">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="unread" style="border-bottom: 1px solid #EDEBE9; padding-left: 15px;">
+                <a href="#" class="" (click)="readAll($event)"><b>Tandai sudah dibaca ({{unread || 0}})</b></a>
+            </div>
+            <div class="card-notif card-notif-body d-flex flex-column flex-fill">
+                <ng-container *ngIf="dataList.length; else emptyData">
+                    <div *ngFor="let item of dataList" class="row-item mb-2 cursor-pointer"
+                        [ngClass]="{unread: !item.isRead}" (click)="gotoNotif(item)">
+                        <div class="r-info mb-2">
+                            <span [inlineSVG]="'./assets/media/svg/bca/icon/'+getIcon(item)" cacheSVG="true"
+                                class="svg notif-img"></span>
+                            <span>{{item.type}}</span>
+                            <span [inlineSVG]="'./assets/media/svg/bca/icon/notif-dot.svg'" cacheSVG="true"
+                                class="svg notif-dot"></span>
+                            <span>{{item.date | date:'dd/MM/yyyy'}}</span>
+                        </div>
+                        <div class="r-title fs18 fb6 mb-2">
+                            <a>
+                                <span>
+                                    {{item.title}}
+                                </span>
+                                <span *ngIf="item.by"> - {{item.by}}</span>
+                            </a>
+                        </div>
+                        <div class="r-desc fs14 fb4 mb-2">{{item.desc}}</div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center flex-wrap mt-5">
+                        <app-pagination (onChange)="setPage($event)" [paging]="pagination">
+                        </app-pagination>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #emptyData>
+    <div class="d-flex flex-center flex-fill flex-column">
+        <ng-container *ngIf="keyword">
+            <span [inlineSVG]="'./assets/media/svg/bca/icon/notification-not-found.svg'" cacheSVG="true"
+                class="svg"></span>
+            <span>Pencarian tidak dapat ditemukan</span>
+        </ng-container>
+        <ng-container *ngIf="!keyword">
+            <span [inlineSVG]="'./assets/media/svg/bca/icon/notification-empty.svg'" cacheSVG="true" class="svg"></span>
+            <span>Kamu belum mempunya notifikasi</span>
+        </ng-container>
+    </div>
+</ng-template>

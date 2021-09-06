@@ -1,0 +1,155 @@
+<div class="background-search" style="
+    background-image: url('./assets/media/images/struktur_bg.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 185px;
+    fill:solid rgb(0,0,0)
+"></div>
+<div class="card card-custom gutter-b mx-15 mt-n50" style="overflow-x: hidden;">
+    <div class="card-body d-flex flex-column flex-grow flex-wrap">
+        <span class="pakar-text-header">Struktur Menu</span>
+        <span class="pakar-text-header-desc">Menu untuk menambahkan, mengubah, atau menghapus struktur level
+            PAKAR.</span>
+        <div class="struktur-container d-flex flex-row flex-column-fluid rounded-sm mt-8">
+            <div class="section-nav d-flex flex-column flex-row-auto">
+                <div class="nav-header d-flex flex-row justify-content-between align-items-center pl-8">
+                    <a routerLink="/homepage">
+                        <span [inlineSVG]="'./assets/media/svg/bca/pakar-logo-top.svg'" cacheSVG="true" class=""></span>
+                    </a>
+                    <a (click)="open()" class="btn  btn-icon btn-sm btn-clean btn-blue"><i
+                            class="fa fa-plus-circle"></i></a>
+                </div>
+                <ul class="navi navi-hover mt-5">
+                    <ng-container *ngFor="let item of menuConfig.items">
+                        <ng-container class="navi-item" *ngIf="item.level === 1" [ngTemplateOutlet]="rowItem"
+                            [ngTemplateOutletContext]="{item:item}">
+                        </ng-container>
+                    </ng-container>
+                </ul>
+            </div>
+            <div class="section-body d-flex flex-column flex-row-fluid align-items-stretch px-10 py-5">
+                <app-struktur-lvl2-tree [selected]="selected$" (editLevel1)="editLevel1($event)"
+                    (deleteLevel1)="deleteLevel1()" [locationStruktur]="categories$"></app-struktur-lvl2-tree>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #rowItem let-item="item">
+    <li class="navi-item" [ngClass]="{'cursor-pointer': item.edit, 'disabled': !item.edit}" (click)="setJsTree(item)">
+        <a class="navi-link" [ngClass]="{disabled: !item.edit}">
+            <span class="navi-text" [ngClass]="{
+                    'font-bold-700': selected$.value.id && selected$.value.id == item.id, 
+                    'pakar-color-dark' : selected$.value.id && selected$.value.id == item.id
+                }">{{item.title}}</span>
+            <span class="navi-arrow" *ngIf="item.menus?.length"></span>
+        </a>
+    </li>
+</ng-template>
+
+<ng-template #rowEmpty>
+    <span>Data Menu Kosong</span>
+</ng-template>
+
+<ng-template #formAddSection let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{isEdit ? 'Ubah' : 'Tambah'}} Menu</h4>
+        <button type="button" class="close font-weight-lighter" aria-label="Close" (click)="d('Cross click')">
+            <i aria-hidden="true" class="icon-2x">&times;</i>
+        </button>
+    </div>
+    <div class="modal-body pt-0">
+        <form class="form" [formGroup]="dataForm" novalidate="novalidate" (ngSubmit)="save()">
+            <div class="form-group">
+                <label>Nama Menu <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" maxlength="50" placeholder="Masukkan nama menu" required
+                    formControlName="name" autocomplete="off" [ngClass]="{ 'is-invalid': hasError}">
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['name']}"></ng-container>
+            </div>
+            <div class="form-group">
+                <label>Icon Menu <span class="text-danger">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile04"
+                        [ngClass]="{ 'is-invalid': hasError }" (change)="onImageChange($event, 'icon')"
+                        accept="image/*">
+                    <label class="custom-file-label" for="inputGroupFile04">{{ showIconName('icon') }}</label>
+                </div>
+                <small>Icon diperlukan untuk kebutuhan navigasi menu kiri.</small>
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['icon']}"></ng-container>
+                <div class="preview" *ngIf="iconFile">
+                    <img [src]="iconFile" style="width:25px; height:25px">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Gambar Menu <span class="text-danger">*</span></label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile04"
+                        [ngClass]="{ 'is-invalid': hasError }" (change)="onImageChange($event, 'image')"
+                        accept="image/*">
+                    <label class="custom-file-label" for="inputGroupFile04">{{ showIconName('image') }}</label>
+                </div>
+                <small>Gambar diperlukan untuk kebutuhan homepage.</small>
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['image']}"></ng-container>
+                <div class="preview" *ngIf="imageFile">
+                    <img [src]="imageFile" style="width:100px; height:100px">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Deskripsi Menu <span class="text-danger">*</span></label>
+                <textarea class="form-control" maxlength="200" placeholder="Masukkan definisi dari Kategori terkait"
+                    required formControlName="desc" autocomplete="off"
+                    [ngClass]="{ 'is-invalid': hasError }"></textarea>
+                <ng-container [ngTemplateOutlet]="formError"
+                    [ngTemplateOutletContext]="{ control: dataForm.controls['desc']}"></ng-container>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light btn-sm rounded-lg px-5" (click)="c('Batal')">Batal</button>
+        <button type="button" class="btn btn-sm btn-blue rounded-lg px-5" (click)="save()"
+            [disabled]="dataForm.invalid">{{isEdit ? 'Ubah' : 'Tambah'}}</button>
+    </div>
+</ng-template>
+
+<ng-template #formChangeParent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Pindah Menu</h4>
+        <button type="button" class="close font-weight-lighter" aria-label="Close" (click)="d('Cross click')">
+            <i aria-hidden="true" class="icon-2x">&times;</i>
+        </button>
+    </div>
+    <div class="modal-body pt-0">
+        <form class="form" [formGroup]="dataForm" novalidate="novalidate" (ngSubmit)="save()">
+            <div>Sebelum Kamu dapat menghapus menu <b>"{{selectedDelete.title}}"</b>, Kamu harus memindahkan terlebih dahulu
+                kategori yang terdapat pada menu tersebut.</div>
+            <div class="form-group row" *ngFor="let change of listToChangeParent">
+                <label class="col-4 col-form-label">{{change.title}}</label>
+                <select class="form-control col-7" required [ngClass]="{ 'is-invalid': change.error}" #mySelect (change)="changeComboboxParent(mySelect.value, change.id)">
+                    <option value="0">-- Pilih Salah Satu --</option>
+                    <option *ngFor="let bro of listBrothers" [value]="bro.id">{{bro.title}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-light btn-sm rounded-lg px-5" (click)="c('Batal')">Batal</button>
+        <button type="button" class="btn btn-sm btn-blue rounded-lg px-5" (click)="saveChangeParent()">Simpan</button>
+    </div>
+</ng-template>
+
+<ng-template #formError let-control="control">
+    <ng-container *ngIf="control.errors && control.dirty">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                <ng-container *ngIf="control.errors.required"><span>Field harus disi</span></ng-container>
+                <ng-container *ngIf="control.errors.minlength"><span>Panjang minimal
+                        {{control.errors.minlength.requiredLength}}</span></ng-container>
+                <ng-container *ngIf="control.errors.maxlength"><span>Panjang maximal
+                        {{control.errors.maxlength.requiredLength}}</span></ng-container>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

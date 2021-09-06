@@ -1,0 +1,59 @@
+<div class="background-overlay background-search" style="
+    background-image: url('./assets/media/images/recommendation_bg.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 184px;
+"></div>
+<div class="mx-15 mt-n50">
+    <pakar-search></pakar-search>
+    <div class="mb-5 back-panel">
+        <a routerLink="/homepage">
+            <i class="fas fa-angle-left mr-2"></i> Kembali ke Halaman Utama PAKAR
+        </a>
+    </div>
+    <div class="card card-custom p-10" style="overflow-x: hidden;">
+        <div>
+            <div class="font-weight-bolder text-dark font-size-xl my-2">PAKAR Terbaru</div>
+            <div class="font-weight-base font-size-lg mb-7">Kumpulan informasi PAKAR yang baru di-<i class="font-size-lg">update</i>
+            </div>
+        </div>
+
+        <div class="" style="padding-right: 250px">
+            <div class="row m-0 p-0">
+                <!-- <div class="col-3 card-article mr-7 mb-7 rounded-lg" *ngFor="let item of dataList"> -->
+                <div class="col-lg-4 col-xxl-4" *ngFor="let item of dataList">
+                    <div class="row card-article mr-7 mb-4 rounded-lg cursor-pointer"
+                        onmouseover="this.style.border ='1px groove #1995D1';"
+                        onmouseout="this.style.border ='1px solid #DDD';">
+                        <div class="col-md-auto p-0" style="width: 100%;">
+                            <img class="d-flex img-show bgi-position-x-center" src="{{backend_img}}/{{item.image}}" width="100%"
+                                height="112px" style="background-position:center; object-fit: cover;">
+                        </div>
+                        <div class="col py-0 px-4">
+                            <div class="my-3">
+                                <span
+                                    class="text-muted font-weight-bold font-size-sm">{{item.created_date | date: "dd MMMM yyyy"}}</span>
+                            </div>
+                            <div class="mb-2">
+                                <a class="text-dark font-weight-bold font-size-h7" href="#"
+                                    routerLink="/article/recommendation">{{item.title}}</a>
+                            </div>
+                            <p class="text-desc mb-10">
+                                {{item.desc}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center flex-wrap mt-5">
+                <app-pagination
+                [paging]="paging"
+                (onChange)="setPage($event)"
+                ></app-pagination>
+            </div>
+
+        </div>
+    </div>
+
+</div>

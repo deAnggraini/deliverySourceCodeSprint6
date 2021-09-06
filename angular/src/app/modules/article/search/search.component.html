@@ -1,0 +1,102 @@
+<div class="background-search" style="
+    background-image: url('./assets/media/images/search_result_bg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 184px;
+"></div>
+<div class="mx-15 mt-n40">
+    <div class="mb-5 back-panel">
+        <a routerLink="/homepage" class="cursor-pointer">
+            <i class="fas fa-angle-left mr-2"></i> Kembali ke Halaman Utama PAKAR
+        </a>
+    </div>
+    <div class="card card-custom p-10" style="overflow-x: hidden;">
+        <div class="col-lg-6 col-xxl-6 input-search my-5">
+            <pakar-search></pakar-search>
+        </div>
+
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>
+                    <i class="fa fa-search mr-2"></i> PAKAR ({{pakar.paging.totalData}})
+                </a>
+                <ng-template ngbNavContent class="data-item">
+                    <div *ngIf="pakar.list.length == 0">
+                        <div class="my-5">Pencarian Kamu terkait '<b>{{keyword}}</b>'' tidak dapat ditemukan</div>
+                        <div>Saran:</div>
+                        <ul>
+                            <li>Pastikan Kata kunci yang Kamu ketik sudah benar</li>
+                            <li>Coba kata kunci lain yang lebih umum</li>
+                        </ul>
+                    </div>
+                    <div *ngIf="pakar.list.length">
+                        <div class="mt-3">Hasil Pencarian {{pakar.paging.totalData}} Informasi terkait</div>
+                        <div class="mt-3" *ngIf="pakar.suggestion">
+                            <span>Apakah yang Kamu maksud </span>
+                            <span class="text-suggestion"><i>{{pakar.suggestion}}</i></span>
+                        </div>
+                        <ul class="nav mt-1">
+                            <li class="nav-item mb-5 col-xx-lg" style="width: 85%;" *ngFor="let item of pakar.list">
+                                <ng-container [ngTemplateOutlet]="tmpRowItem" [ngTemplateOutletContext]="{item:item}">
+                                </ng-container>
+                            </li>
+                        </ul>
+
+                        <div class="d-flex justify-content-center align-items-center flex-wrap mt-5"
+                            *ngIf="pakar.list.length">
+                            <app-pagination (onChange)="setPage('pakar', $event)" [paging]="pakar.paging"></app-pagination>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink><i class="far fa-question-circle mr-2"></i> FAQ ({{faq.paging.totalData}})</a>
+                <ng-template ngbNavContent class="data-item">
+                    <div *ngIf="pakar.list.length == 0">
+                        <div class="my-5">Pencarian Kamu terkait '<b>{{keyword}}</b>' tidak dapat ditemukan</div>
+                        <div>Saran:</div>
+                        <ul>
+                            <li>Pastikan Kata kunci yang Kamu ketik sudah benar</li>
+                            <li>Coba kata kunci lain yang lebih umum</li>
+                        </ul>
+                    </div>
+                    <div *ngIf="pakar.list.length">
+                        <div class="mt-3">Hasil Pencarian {{faq.paging.totalData}} Informasi terkait</div>
+                        <div class="mt-3" *ngIf="suggestion">
+                            <span>Apakah yang Kamu maksud </span>
+                            <span class="text-suggestion"><i>{{suggestion}}</i></span>
+                        </div>
+                        <ul class="nav">
+                            <li class="nav-item mb-5 col-xx-lg" style="width: 75%;" *ngFor="let item of faq.list">
+                                <ng-container [ngTemplateOutlet]="tmpRowItem" [ngTemplateOutletContext]="{item:item}">
+                                </ng-container>
+                            </li>
+                        </ul>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
+</div>
+
+<ng-template #tmpRowItem let-item="item">
+    <div class="col-xx-lg">
+        <a class="nav-link active" routerLink="/article/list/{{item.id}}">
+            <span class="svg mr-2" [inlineSVG]="'./assets/media/svg/bca/icon/'+item.type+'.svg'" cacheSVG="true"></span>
+            <span class="nav-text-article">{{item.title}}</span>
+        </a>
+        <div class="text-muted mb-1 font-size-sm" [innerHTML]="formatterCategory(item.category) | sanitizeHtml">&nbsp;
+        </div>
+        <div class="text-desc">{{item.desc}}</div>
+    </div>
+</ng-template>
+
+<ng-template #tmpEmptyData>
+    <div>Pencarian Kamu terkait <b>{{keyword}}</b> tidak dapat ditemukan</div>
+    <div>Saran:</div>
+    <ul>
+        <li>Pastikan Kata kunci yang Kamu ketik sudah benar</li>
+        <li>Coba kata kunci lain yang lebih umum</li>
+    </ul>
+</ng-template>

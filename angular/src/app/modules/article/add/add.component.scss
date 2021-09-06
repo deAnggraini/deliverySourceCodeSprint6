@@ -1,0 +1,16 @@
+:host ::ng-deep {
+  .template-item {
+    max-width: 200px;
+
+    .template-thumbnail {
+      height: 210px;
+      width: 158px;
+    }
+  }
+
+  .right-preview {
+    width: 400px;
+    height: 520px;
+    background-size: contain;
+  }
+}
