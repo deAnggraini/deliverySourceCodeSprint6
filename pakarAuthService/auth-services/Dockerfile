@@ -1,17 +1,20 @@
-FROM openjdk:11
-#ENV APP_FILE auth-services.jar
+FROM openjdk-11-rhel7:1.1
 
-#MAINTAINER jumono
-EXPOSE 9094
+MAINTAINER iwan
 
-RUN mkdir /config
+USER root
+
+
+#RUN mkdir /config
 RUN mkdir /var/bca
 RUN mkdir /var/bca/file
 
-COPY application.yml /config/application.yml
-COPY log4j2.xml /config/log4j2.xml
+#COPY application.yml /config/application.yml
+#COPY log4j2.xml /config/log4j2.xml
 COPY user.json /var/bca/file/user.json
 
-COPY target/auth-services.jar auth-services.jar
+COPY ./target/auth-services.jar /deployments/auth-services.jar
 
-ENTRYPOINT ["java","-Dport=12085","-Dlogging.config=/config/log4j2.xml","-Dspring.profiles.active=dev-local","-Dspring.config.location=file:/config/application.yml","-jar","auth-services.jar"]
+#RUN chown -R 185:root /deployments
+
+#ENTRYPOINT ["java","-Dport=12085","-jar","auth-services.jar"]
