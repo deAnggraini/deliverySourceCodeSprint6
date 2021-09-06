@@ -45,23 +45,28 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://36.89.25.220:13081/oauth/token_key # JSON Web Key URI to use to verify the JWT token.
-          issuer-uri: http://36.89.25.220:13081/api/auth/me
-        token-info-uri: http://36.89.25.220:13081/oauth/check_token
-        auth-server: http://36.89.25.220:13081
-        doc-server: http://36.89.25.220:13082
-        wf-server: http://36.89.25.220:13083
+          jwk-set-uri: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/oauth/token_key # JSON Web Key URI to use to verify the JWT token.
+          issuer-uri: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/auth/me
+          token-info-uri: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/oauth/check_token
+          auth-server: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+          doc-server: http://localhost:8080
+          wf-server: http://dev-bca-pakar-wf-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/
       server:
-        url: http://36.89.25.220:13081
+        url: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
       clientId: 8C21EBEEB1AA3FBFE05400144FFBD319
       clientSecret: da82edc6dcc1af30
     jwt:
       signingkey: pakar123
   dataSource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://36.89.25.220:5432/pakardb5
-    username: pakar5
+    url: jdbc:postgresql://36.89.25.220:5432/pakardb3
+    username: pakar3
     password: pakar123
     hikari:
-      connectionTimeout: 20000
-      maximumPoolSize: 5
+      type: com.zaxxer.hikari.HikariDataSource
+      pool-name: pakar-doc-pool
+      maximum-pool-size: 20
+      max-lifetime: 1800000
+      idle-timeout: 30000
+      minimum-idle: 5
+      connection-timeout: 20000
