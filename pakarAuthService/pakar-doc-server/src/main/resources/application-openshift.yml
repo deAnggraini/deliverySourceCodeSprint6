@@ -3,11 +3,11 @@ server:
 upload:
   path:
     base: /var/bca/images
-    menu: /menu/
-    category: /structures/
-    theme: /themes/
-    article: /articles/
-    user: /users/
+    menu: /var/bca/images/menu/
+    category: /var/bca/images/structures/
+    theme: /var/bca/images/themes/
+    article: /var/bca/images/articles/
+    user: /var/bca/images/users/
 spring:
   rest:
     timeout:
@@ -47,10 +47,10 @@ spring:
         jwt:
           jwk-set-uri: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/oauth/token_key # JSON Web Key URI to use to verify the JWT token.
           issuer-uri: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/auth/me
-          token-info-uri: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/oauth/check_token
-          auth-server: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
-          doc-server: http://localhost:8080
-          wf-server: http://dev-bca-pakar-wf-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/
+        token-info-uri: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/oauth/check_token
+        auth-server: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+        doc-server: http://localhost:8080
+        wf-server: http://dev-bca-pakar-wf-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
       server:
         url: http://dev-bca-pakar-oauth2-server-d3wiaccred-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
       clientId: 8C21EBEEB1AA3FBFE05400144FFBD319

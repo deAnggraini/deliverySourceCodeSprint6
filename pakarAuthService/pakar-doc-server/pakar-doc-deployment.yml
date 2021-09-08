@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-bca-pakar-doc-server
+  namespace: bca-pakar
+  labels:
+    app: dev-bca-pakar-doc-server
+spec:
+  selector:
+    app: dev-bca-pakar-doc-server
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: 8080-http
+      
+---      
+
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: dev-bca-pakar-doc-server
+  namespace: bca-pakar
+  labels:
+    app: dev-bca-pakar-doc-server
+spec:
+  selector: 
+    app: dev-bca-pakar-doc-server
+    deploymentconfig: dev-bca-pakar-doc-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dev-bca-pakar-doc-server
+        deploymentconfig: dev-bca-pakar-doc-server
+    spec:
+      containers:
+        - name: authservice
+          env: 
+          - name: SPRING_PROFILES_ACTIVE
+            value: openshift   
+          ports: 
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8778
+              protocol: TCP
+          volumeMounts:
+            - name: bca
+              mountPath: /var/bca/images
+              readOnly: false  
+              subPath: images
+            - name: bca
+              mountPath: /var/bca/images/menus
+              readOnly: false 
+              subPath: menus              
+            - name: bca
+              mountPath: /var/bca/images/structures
+              readOnly: false 
+              subPath: structures               
+            - name: bca
+              mountPath: /var/bca/images/articles
+              readOnly: false 
+              subPath: articles               
+            - name: bca
+              mountPath: /var/bca/images/themes
+              readOnly: false    
+              subPath: themes                    
+            - name: bca
+              mountPath: /var/bca/images/users
+              readOnly: false     
+              subPath: users                                                                                        
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1G
+            requests:
+              cpu: "0.2"
+              memory: 512m
+          image: image-registry.openshift-image-registry.svc:5000/bca-pakar/pakar-doc-server:latest
+      volumes:
+        - name: bca
+          persistentVolumeClaim:
+            claimName: bca                                                                 
